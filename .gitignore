@@ -1,0 +1,6 @@
+node_modules/
+build/
+data/
+dist/
+.DS_Store
+*.jbtstore
