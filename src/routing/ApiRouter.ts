@@ -9,7 +9,7 @@ api.get('/songs', (req, res) => {
             delete song.type;
             return song;
         })
-        res.json(songs);
+        res.json({ songs });
     })
 })
 
