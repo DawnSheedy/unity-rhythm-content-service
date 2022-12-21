@@ -45,7 +45,7 @@ const importSongFromDir = async (filePath: string) => {
 };
 
 const getJsonFromFile = async (metaPath: string) => {
-  const dir = path.dirname(metaPath);
+  const dir = path.dirname(metaPath).split('/')[1];
   const file = await fs.promises.readFile(metaPath, { encoding: "utf-8" });
   const obj = JSON.parse(file);
   return { ...obj, uuid: dir } as SongMeta;
