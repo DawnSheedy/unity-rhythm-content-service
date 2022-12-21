@@ -35,7 +35,7 @@ const introspectDataFolder = async () => {
   }
 
   await Promise.all(promises);
-  console.log(`Loaded ${promises.length} songs.`);
+  Logger.log(`Loaded ${promises.length} songs.`);
 };
 
 const importSongFromDir = async (filePath: string) => {
@@ -44,8 +44,9 @@ const importSongFromDir = async (filePath: string) => {
   NedbController.addSong(songObj);
 };
 
-const getJsonFromFile = async (path: string) => {
-  const file = await fs.promises.readFile(path, { encoding: "utf-8" });
+const getJsonFromFile = async (metaPath: string) => {
+  const dir = path.dirname(metaPath);
+  const file = await fs.promises.readFile(metaPath, { encoding: "utf-8" });
   const obj = JSON.parse(file);
-  return obj as SongMeta;
+  return { ...obj, uuid: dir } as SongMeta;
 };

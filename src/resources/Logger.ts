@@ -5,20 +5,20 @@ class Logger {
     this.prefix = prefix;
   }
 
-  private print(message: string) {
-    console.log(`[${this.prefix}] ${message}`);
+  private print(level: string, message: string) {
+    console.log(`[${new Date().toISOString()}] ${level} [${this.prefix}] ${message}`);
   }
 
   log(message: string) {
-    this.print(`[LOG]: ${message}`);
+    this.print('\x1b[32m[LOG]\x1b[0m', message);
   }
 
   warn(message: string) {
-    this.print(`[WARN]: ${message}`);
+    this.print('\x1b[33m[WARN]\x1b[0m', message);
   }
 
   critical(message: string) {
-    this.print(`[CRITICAL]: ${message}`);
+    this.print('\x1b[31m[CRITICAL]\x1b[0m', message);
   }
 }
 

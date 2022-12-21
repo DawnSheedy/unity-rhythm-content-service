@@ -1,5 +1,4 @@
 import { SongMeta } from "../model/SongMeta";
-import { songListLoader } from "./SongListLoader";
 
 export class SongListProvider {
     private songMeta: SongMeta[];

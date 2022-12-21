@@ -8,7 +8,10 @@ const webServerResource = () => {
 
   app.use("/api", ApiRouter);
 
-  app.use('/songdata', express.static('data'))
+  app.use('/songdata', (req, res, next) => {
+    Logger.log(`${req.ip}: ${req.path}`);
+    express.static('data')(req, res, next);
+  })
 
   app.listen(port, () => {
     Logger.log(`Content Service listening on port ${port}`);
