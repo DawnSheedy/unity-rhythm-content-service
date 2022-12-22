@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import { NedbController } from "../db/NedbController";
 import { Logger } from "../resources/Logger";
+import { GameplayResults } from "../model/GameplayResults";
 
 const api = Router();
 
@@ -19,6 +20,24 @@ api.get("/songs", (req, res) => {
     res.json({ songs });
   });
 });
+
+api.get("/scores", (req, res) => {
+    NedbController.getAllScores({}).then((scores) => {
+      scores.map((score) => {
+        delete score.type;
+        return score;
+      });
+
+      res.json({ scores });
+    });
+  });
+
+api.post("/scores", (req, res) => {
+    const results = req.body as GameplayResults
+    NedbController.addSongResult(results).then((result) => {
+        res.json(result);
+    })
+})
 
 api.get("/songs/favorites", (req, res) => {
   NedbController.getAllSongs({ favorites: true }).then((songs) => {
@@ -52,7 +71,7 @@ api.post("/songs/favorites", (req, res) => {
         res.json({ error: "DB Error" });
         return;
       }
-      res.json({ item });
+      res.json(item);
     }
   );
 });
