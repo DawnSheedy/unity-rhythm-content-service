@@ -3,6 +3,7 @@ import { SongMeta } from "../model/SongMeta";
 
 export interface GetSongsConfig {
   favorites?: boolean;
+  songId?: string;
 }
 
 export interface GetScoresConfig {

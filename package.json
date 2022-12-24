@@ -12,7 +12,8 @@
   "author": "Dawn Sheedy",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "start:debug": "DEBUG=express:* ts-node src/index.ts"
   },
   "devDependencies": {
     "ts-node": "^10.9.1"

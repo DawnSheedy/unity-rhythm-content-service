@@ -7,14 +7,14 @@ const db = new Datastore({ filename: "./data.jbtstore", autoload: true });
 
 class NedbController implements DBController {
   addSong = async (song: SongMeta) => {
-    await db.insert({ type: "song", favorited: false, ...song });
+    await db.insert({ type: "song", ...song });
     return song;
   };
 
   addSongResult = async (result: GameplayResults) => {
     await db.insert({ type: "songResult", ...result });
     return result;
-  }
+  };
 
   getSongByTitle = async (title: string) => {
     return (await db.findAsync({ title }))[0];
@@ -24,13 +24,14 @@ class NedbController implements DBController {
     const queryInjections = songId ? { songId } : {};
     return await db
       .findAsync({ type: "songResult", ...queryInjections })
-      .sort((a: GameplayResults, b: GameplayResults) =>
-        b.points - a.points
-      );
+      .sort((a: GameplayResults, b: GameplayResults) => b.points - a.points);
   };
 
-  getAllSongs = async ({ favorites }: GetSongsConfig) => {
-    const queryInjections = favorites ? { favorited: true } : {};
+  getAllSongs = async ({ favorites, songId }: GetSongsConfig) => {
+    let queryInjections: any = favorites ? { favorited: true } : {};
+    queryInjections = songId
+      ? { ...queryInjections, uuid: songId }
+      : queryInjections;
     return await db
       .findAsync({ type: "song", ...queryInjections })
       .sort((a: SongMeta, b: SongMeta) =>
@@ -54,13 +55,12 @@ class NedbController implements DBController {
   updateFavorite = async (songId: string, favorite: boolean) => {
     const response = await db.updateAsync(
       { type: "song", uuid: songId },
-      { $set: { favorited: favorite }},
+      { $set: { favorited: favorite } },
       { returnUpdatedDocs: true }
     );
     if (response.numAffected > 0) {
       return response.affectedDocuments;
-    } else
-    return null;
+    } else return null;
   };
 }
 

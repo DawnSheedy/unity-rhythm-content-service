@@ -7,5 +7,6 @@ export interface SongMeta {
     artist: string;
     length: number;
     tempo: number;
+    favorited: boolean;
     versions: SongDifficultyMeta[];
 }
