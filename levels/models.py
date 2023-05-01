@@ -32,7 +32,7 @@ class Chart(models.Model):
         ADV = 'ADV', 'Advanced'
         EXT = 'EXT', 'Extreme'
 
-    parent_level = models.ForeignKey(Level, on_delete=models.CASCADE)
+    parent_level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='charts')
     difficulty = models.CharField(
         choices=ChartDifficultyOptions.choices, default=ChartDifficultyOptions.BSC, max_length=3)
 
@@ -49,7 +49,7 @@ class ChartEvent(models.Model):
         MSUR = 'MSUR', 'Measure'
         STOP = 'STOP', 'End'
 
-    parent_chart = models.ForeignKey(Chart, on_delete=models.CASCADE)
+    parent_chart = models.ForeignKey(Chart, on_delete=models.CASCADE, related_name='events')
     tick = models.IntegerField()
     type = models.CharField(choices=ChartEventTypes.choices,
                             default=ChartEventTypes.BEAT, max_length=4)
