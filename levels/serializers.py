@@ -1,4 +1,4 @@
-from models import Level, Chart, ChartEvent
+from levels.models import Level, Chart, ChartEvent
 from rest_framework import serializers
 
 
